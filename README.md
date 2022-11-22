@@ -2,15 +2,15 @@
 Seminar 3 - Sistemes de Codificació d'Audio i Video SCAV
 Marc Rodriguez Jareño Nia: 228997
 
-#Exercici 1
-
+# Exercici 1
+ 
 Sources:
 https://trac.ffmpeg.org/wiki/Encode/VP8
 https://trac.ffmpeg.org/wiki/Encode/VP9
 https://trac.ffmpeg.org/wiki/Encode/H.265
 https://trac.ffmpeg.org/wiki/Encode/AV1
 
-#Exercici 2
+# Exercici 2
 
 I created a function that selects the concrete resolution of the previous outputs and shows us 4 videos in one. We could see the bitrates using ffprobe
 
