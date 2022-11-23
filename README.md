@@ -30,3 +30,8 @@ AV1 can sabe about 30% bitrate compared to VP9 and h265, and about 50% h264.
 VP9 seems better, in quality terms, than h265. VP8 has the worst resolution quality of the 4 codecs.
 
 # Exercici 2
+
+Video Conversor 
+
+<img width="341" alt="Captura de Pantalla 2022-11-23 a las 2 06 19" src="https://user-images.githubusercontent.com/72939158/203451573-be9c6ef7-d4ba-4a8c-a256-9cab552be47b.png">
+
