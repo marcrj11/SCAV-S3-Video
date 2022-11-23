@@ -1,5 +1,7 @@
 import glob
 import os
+from tkinter import filedialog as fd
+from tkinter.messagebox import showinfo
 
 
 def menu():
@@ -58,6 +60,7 @@ def resizer(file_name):
     # Apply transformation using ffmpeg
     command = f'ffmpeg -i {file_name} -vf {resolution} {new_name}.mp4'
     os.system(command)
+    return
 
 
 def converter(file_name):
@@ -87,10 +90,54 @@ def converter(file_name):
 
     # print(command)
     os.system(command)
+    return
+
+
+def convert_vp8(file_name):
+    new_name = file_name[:-4] + "_converted_to_vp8"
+    command = f'ffmpeg -i {file_name} -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis {new_name}.webm'
+    if os.path.exists(f'{new_name}.webm'):
+        os.remove(f'{new_name}.webm')
+    showinfo(title='Starting conversion', message="Starting conversion...wait")
+    os.system(command)
+    showinfo(title='Conversion Successful', message="Video was converted to VP8")
+    return
+
+
+def convert_vp9(file_name):
+    new_name = file_name[:-4] + "_converted_to_vp8"
+    command = f'ffmpeg -i {file_name} -c:v libvpx-vp9 -b:v 2M {new_name}.webm'
+    if os.path.exists(f'{new_name}.webm'):
+        os.remove(f'{new_name}.webm')
+    showinfo(title='Starting conversion', message="Starting conversion...wait")
+    os.system(command)
+    showinfo(title='Conversion Successful', message="Video was converted to VP9")
+    return
+
+
+def convert_h265(file_name):
+    new_name = file_name[:-4] + "_converted_to_vp8"
+    command = f'ffmpeg -i {file_name} -c:v libx265 -crf 26 -preset fast -c:a aac -b:a 128k {new_name}.mp4'
+    if os.path.exists(f'{new_name}.mp4'):
+        os.remove(f'{new_name}.mp4')
+    showinfo(title='Starting conversion', message="Starting conversion...wait, it may take some time!")
+    os.system(command)
+    showinfo(title='Conversion Successful', message="Video was converted to h265")
+    return
+
+
+def convert_av1(file_name):
+    new_name = file_name[:-4] + "_converted_to_vp8"
+    command = f'ffmpeg -i {file_name} -c:v libaom-av1 -crf 30 {new_name}.mkv'
+    if os.path.exists(f'{new_name}.mkv'):
+        os.remove(f'{new_name}.mkv')
+    showinfo(title='Starting conversion', message="Starting conversion...wait")
+    os.system(command)
+    showinfo(title='Conversion Successful', message="Video was converted to AV1")
+    return
 
 
 def mosaic(file_name1, file_name2, file_name3, file_name4, output_name):
-
     command = f'ffmpeg -i {file_name1} -i {file_name2} -i {file_name3} -i {file_name4} ' + \
               '-filter_complex "nullsrc=size=1280x720 [base];' + \
               '[0:v] setpts=PTS-STARTPTS, scale=640x360 [upperleft];' + \
@@ -103,4 +150,15 @@ def mosaic(file_name1, file_name2, file_name3, file_name4, output_name):
               f'[tmp3][lowerright] overlay=shortest=1:x=640:y=360" -c:v libx265 ../media/{output_name}.mp4'
 
     os.system(command)
+    return
 
+
+def select_file(root):
+    root.filename = fd.askopenfilename(title="Select a File")
+    root.filelocation.configure(state='normal')
+    root.filelocation.delete(0, 'end')  # Insert the file location of the audio in the label
+    root.filelocation.insert(0, root.filename)
+    root.filelocation.configure(state='disabled')
+    showinfo(title='Selected File', message="File selected: " + root.filename)
+
+    return
